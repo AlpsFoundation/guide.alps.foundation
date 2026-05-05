@@ -1,17 +1,586 @@
 ---
+import "../styles/global.css";
+import IconBook2 from "@tabler/icons/outline/book-2.svg?raw";
+import IconBrandGithub from "@tabler/icons/outline/brand-github.svg?raw";
+import IconBrandWhatsapp from "@tabler/icons/outline/brand-whatsapp.svg?raw";
+import IconBuildingBank from "@tabler/icons/outline/building-bank.svg?raw";
+import IconCalendarEvent from "@tabler/icons/outline/calendar-event.svg?raw";
+import IconCheck from "@tabler/icons/outline/check.svg?raw";
+import IconCircleCheck from "@tabler/icons/outline/circle-check.svg?raw";
+import IconClipboardCheck from "@tabler/icons/outline/clipboard-check.svg?raw";
+import IconCompass from "@tabler/icons/outline/compass.svg?raw";
+import IconExternalLink from "@tabler/icons/outline/external-link.svg?raw";
+import IconFileText from "@tabler/icons/outline/file-text.svg?raw";
+import IconForms from "@tabler/icons/outline/forms.svg?raw";
+import IconHeartHandshake from "@tabler/icons/outline/heart-handshake.svg?raw";
+import IconLeaf from "@tabler/icons/outline/leaf.svg?raw";
+import IconMapPin from "@tabler/icons/outline/map-pin.svg?raw";
+import IconMicroscope from "@tabler/icons/outline/microscope.svg?raw";
+import IconMovie from "@tabler/icons/outline/movie.svg?raw";
+import IconNetwork from "@tabler/icons/outline/network.svg?raw";
+import IconPresentation from "@tabler/icons/outline/presentation.svg?raw";
+import IconRoute from "@tabler/icons/outline/route.svg?raw";
+import IconSchool from "@tabler/icons/outline/school.svg?raw";
+import IconShieldCheck from "@tabler/icons/outline/shield-check.svg?raw";
+import IconTargetArrow from "@tabler/icons/outline/target-arrow.svg?raw";
+import IconUsersGroup from "@tabler/icons/outline/users-group.svg?raw";
+import IconX from "@tabler/icons/outline/x.svg?raw";
 
+const registrationSteps = [
+  {
+    icon: IconFileText,
+    title: "Find the administrative regulation.",
+    body: `Search your university website for terms like "student associations", "groupes d'étudiants", "associazioni studentesche", "Hochschulgruppen". The relevant office is usually the Student Affairs / Vie Étudiante / Studierendenwerk / Servizi agli Studenti. Download the official template for statutes (statutes / Vereinsstatuten / statuto / statuts) — most universities provide one.`,
+  },
+  {
+    icon: IconUsersGroup,
+    title: "Form a founding committee of 5–10 students.",
+    body: "Aim for interdisciplinary diversity (psychology, medicine, neuroscience, philosophy, anthropology, law, art, data science). Decide who will be President, Treasurer, Secretary at minimum — most statutes require these three roles.",
+  },
+  {
+    icon: IconClipboardCheck,
+    title: "Draft the statutes.",
+    body: "Use the university's template. Define: name, headquarters (the university), purpose (education, prevention, harm reduction — see Part 2), membership rules, governance (general assembly, executive committee), and dissolution clause. Keep the purpose broad enough to evolve.",
+  },
+  {
+    icon: IconPresentation,
+    title: "Hold a constitutive assembly.",
+    body: "Convene the founding members, vote the statutes, elect the committee, sign the minutes (procès-verbal / Gründungsprotokoll / verbale costitutivo). This single document is what you submit to the university.",
+  },
+  {
+    icon: IconSchool,
+    title: "Submit and find a faculty patron.",
+    body: "Many universities ask you to identify a professor who endorses your association. Choose someone respected and ideally already curious about psychedelic research — they protect you politically and open doors. Submit statutes + minutes + member list to the student affairs office.",
+  },
+  {
+    icon: IconBuildingBank,
+    title: "Open a bank account and (if required) register as an association.",
+    body: "In Switzerland, Italy, Germany, France, Spain etc., associations have a national legal form (e.g. Verein, association loi 1901, associazione di promozione sociale, Verein nach §21 BGB). Registering nationally is optional for university-only activity but required if you want to receive grants or sign contracts.",
+  },
+];
+
+const principles = [
+  { icon: IconMicroscope, principle: "Evidence-based", campus: "Paper clubs, expert talks, research summaries, and clear separation between evidence, open questions, and personal opinion." },
+  { icon: IconUsersGroup, principle: "Student-led", campus: "Local students choose formats, language, rhythm, and partnerships that fit their university culture." },
+  { icon: IconSchool, principle: "University-integrated", campus: "Recognition gives legitimacy, room access, welcome-day visibility, funding routes, and a responsible administrative home." },
+  { icon: IconShieldCheck, principle: "Harm-reduction oriented", campus: "Education includes prevention, risk awareness, and responsible referral to professional services when needed." },
+  { icon: IconNetwork, principle: "Networking", campus: "Local associations stay independent while sharing resources, speakers, and annual gatherings through national networks." },
+];
+
+const isItems = [
+  "An education-oriented, scientifically grounded student network.",
+  "A space for critical reflection, interdisciplinary dialogue, and harm-reduction culture.",
+  "A pipeline for the next generation of researchers, clinicians, and policy contributors.",
+  "A legal space where you can openly speak about psychedelics.",
+];
+
+const notItems = [
+  "Not a therapy substitute or crisis intervention service.",
+  "Not a space for promoting consumption, sourcing, or vending substances.",
+  "Not a stage for healing claims or unverifiable personal recommendations.",
+];
+
+const ethics = [
+  "Respect, inclusion, and substance-free events on university premises.",
+  "Scientific integrity: distinguish established research, open questions, and personal experience.",
+  "Personal experiences may be shared as subjective perspective only, never as general advice.",
+  "No advertising, mediating, or facilitating access to controlled substances.",
+  "No therapeutic or medical posture; refer participants in distress to professional services.",
+  "Confidentiality of personal content shared in the group.",
+];
+
+const formats = [
+  { icon: IconMovie, text: "Film screenings + facilitated discussion (low barrier, attracts new members)." },
+  { icon: IconMicroscope, text: "Journal club / paperclub: read and dissect one peer-reviewed paper per session." },
+  { icon: IconBook2, text: "Book club: agree on chapters in advance; discuss in rotating facilitator format." },
+  { icon: IconPresentation, text: "Expert lectures: invite local researchers, clinicians, harm-reduction workers." },
+  { icon: IconHeartHandshake, text: "Integration discussion groups (substance-free, peer-led, with clear ground rules)." },
+  { icon: IconLeaf, text: "Workshops on breathwork, meditation, mindfulness — only led by trained facilitators." },
+  { icon: IconMapPin, text: "Lab and clinic visits, museum excursions, conference field trips." },
+  { icon: IconSchool, text: "Push for an elective course or seminar inside your faculty curriculum !!! (this worked in Zurich University)" },
+];
+
+const palaPillars = [
+  "Monthly movie screenings (open to the public).",
+  "Bi-weekly paperclub with peer-reviewed articles from members for peer education.",
+  "Integration discussion group (peer, substance-free).",
+  "A push for psychedelic content inside the official UNIL curriculum.",
+];
+
+const namingAdvice = [
+  "Make the acronym a real word, evocative of your mission. PALA references Huxley's utopian island in Island (1962) where psychedelics are embedded in culture for healing and flourishing purposes.",
+  "Build the long name from: Psychedelic + your city + University/student + a positive framing word (Awareness, Research, Education).",
+  "Commission a clean circular logo before you launch — it reproduces well on social media, posters, and slides.",
+  "Lock down the email, social medias, and a one-page website at the same time.",
+];
+
+const resources = [
+  ["ALPS Foundation — Psychedelic Student Association Consulting Service: alps.foundation/psychedelic-student-association-consulting-service", "https://www.alps.foundation/psychedelic-student-association-consulting-service"],
+  ["Swiss Psychedelic Student Network (SPSN): alps.foundation/swiss-psychedelic-student-network", "https://www.alps.foundation/swiss-psychedelic-student-network"],
+  ["Psychedelic Student Network Germany (PSNG) — full founding guide: psng.info", "https://www.psng.info"],
+  ["PAREA — pan-European partnership and Forum 2026: parea.eu", "https://parea.eu"],
+  ["Seminal Andrew Sewell’s article which generated all of this (MAPS bulletin - 2006) : https://maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher/", "https://maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher/"],
+];
+
+const timeline = [
+  ["2019", "PALA founded at the University of Lausanne as a student association for awareness, science education, therapy literacy, and prevention/risk reduction."],
+  ["2022–2026", "Swiss groups coordinate through SPSN, with local associations at Lausanne, Geneva, Fribourg, Bern, Neuchatel, Zurich and Basel."],
+  ["2025–2026", "The model travels to Italy through UNEPSI and to Germany through PSNG."],
+  ["2026", "European-level exchange continues through forums such as PAREA's European Forum of National Psychedelic Societies to spread the word in other countries."],
+];
+
+const remember = [
+  "Just Do It. The first meeting beats the perfect plan.",
+  "Set realistic expectations: 5 committed people > 50 vague ones.",
+  "You are not alone — write to ALPS, SPSN, UNEPSI, PSNG. We have all been where you are.",
+  "Honour the Code of Ethical Conduct. Legitimacy and honesty are your most valuable assets.",
+];
+
+const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 390)}ms`;
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network." />
+    <meta name="generator" content={Astro.generator} />
+    <title>How to Start a Psychedelic Student Association</title>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <main class="mx-auto min-h-screen w-full max-w-[1720px] px-5 py-5 text-ink sm:px-8 lg:px-12">
+      <header class="grid min-h-[90vh] overflow-hidden rounded-sm border border-olive-900/50 bg-gradient-to-br from-olive-50 via-paper to-olive-200/60 p-5 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:p-8" data-reveal>
+        <div class="flex flex-col justify-between gap-12">
+          <a class="sticky top-8 z-10 w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
+            <span class="alps-logo-mask alps-logo-mask--header" aria-hidden="true"></span>
+          </a>
+          <p class="max-w-sm border-l-2 border-olive-700 pl-5 text-base leading-relaxed text-ink-soft">
+            A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network.
+          </p>
+        </div>
+
+        <section class="flex flex-col justify-end pt-20">
+          <h1 class="max-w-6xl bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-[clamp(3.6rem,10vw,11.5rem)] font-black leading-[0.92] text-transparent">
+            How to Start a Psychedelic Student Association at Your University
+          </h1>
+        </section>
+      </header>
+
+      <section class="grid gap-10 py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconCompass} />
+            Why start one
+          </p>
+        </aside>
+        <div class="max-w-5xl space-y-8">
+          <p class="bg-gradient-to-r from-ink via-olive-900 to-olive-700 bg-clip-text text-3xl font-semibold leading-tight text-transparent sm:text-5xl">
+            Across Europe, interest in psychedelic science is exploding among students — but most universities offer almost no space to engage with the topic critically, scientifically, and in community.
+          </p>
+          <div class="grid gap-8 border-y border-rule py-8 text-lg leading-relaxed text-ink-soft md:grid-cols-2">
+            <p>
+              A student association solves that. Approved by the university, it gives you legitimate voice, access to rooms and funding, and a stable platform to invite researchers, screen films, run journal clubs, and host integration discussions.
+            </p>
+            <p>
+              Equally important: it builds the next generation of researchers, clinicians, harm-reduction workers, and policymakers — locally rooted, but connected across borders. That is the seed of a movement.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconMapPin} />
+            Origin
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink to-olive-700 bg-clip-text text-4xl font-black leading-tight text-transparent">Where does this guide comes from</h2>
+        </aside>
+        <div class="max-w-4xl rounded-sm border-l-4 border-olive-700 bg-olive-100/70 p-6 text-lg leading-relaxed text-ink-soft" data-reveal>
+          <p>
+            In September 2019 we co-founded PALA — Psychedelic Association of Lausanne for Awareness — the first university psychedelic student association in Lausanne, Switzerland. PALA seeded the Swiss Psychedelic Student Network (SPSN), which today gathers active groups in 7 of 9 Swiss universities (Lausanne, Geneva, Neuchatel, Zurich, Basel, Bern, Fribourg).
+          </p>
+          <p class="mt-5">
+            We then helped catalyse sister networks in Italy (UNEPSI — University Network of Psychedelic Students Italy in 2023, with active groups now in Rome, Turin, Bologna, Padue) and Germany (PSNG — Psychedelic Student Network Germany, launched in 2025).
+          </p>
+          <p class="mt-5 italic">
+            This guide distils what worked — and what didn't — across those three countries, so you can shortcut the path in yours.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconSchool} />
+            WHAT YOU ARE BUILDING
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink to-olive-700 bg-clip-text text-4xl font-black leading-tight text-transparent">Principle into campus practice</h2>
+        </aside>
+        <div class="overflow-hidden rounded-sm border border-rule bg-paper/70">
+          <div class="grid grid-cols-[0.35fr_0.65fr] border-b border-rule bg-olive-100/80 text-sm font-bold uppercase text-olive-950">
+            <p class="p-4">Principle</p>
+            <p class="border-l border-rule p-4">How it shows up on campus</p>
+          </div>
+          {principles.map(({ icon, principle, campus }, index) => (
+            <div class="grid grid-cols-[0.35fr_0.65fr] border-b border-rule last:border-b-0" data-reveal style={revealStyle(index)}>
+              <p class="flex items-center gap-3 p-4 font-semibold text-ink">
+                <span class="guide-icon h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={icon} />
+                <span>{principle}</span>
+              </p>
+              <p class="border-l border-rule p-4 leading-relaxed text-ink-soft">{campus}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="register" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconClipboardCheck} />
+            Part 1
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Register a Student Association at Your University</h2>
+          <p class="mt-6 text-base leading-relaxed text-ink-soft">
+            Every university has its own bureaucracy, but the skeleton is almost identical across European institutions. Follow these six steps in order; each typically takes a few days to a few weeks.
+          </p>
+        </aside>
+        <div class="space-y-10">
+          <ol class="border-y border-rule">
+            {registrationSteps.map((step, index) => (
+              <li class="grid gap-5 border-b border-rule py-7 last:border-b-0 md:grid-cols-[5rem_1fr]" data-reveal style={revealStyle(index)}>
+                <p class="bg-gradient-to-br from-olive-500 to-olive-900 bg-clip-text text-5xl font-black leading-none text-transparent">{String(index + 1).padStart(2, "0")}</p>
+                <div>
+                  <h3 class="flex items-center gap-3 text-2xl font-bold">
+                    <span class="guide-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-olive-800/20 bg-olive-100 text-olive-800" aria-hidden="true" set:html={step.icon} />
+                    <span>{step.title}</span>
+                  </h3>
+                  <p class="mt-3 max-w-3xl text-lg leading-relaxed text-ink-soft">{step.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
+            <h3 class="flex items-center gap-3 text-xl font-bold">
+              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconSchool} />
+              Tip: choose your patron carefully
+            </h3>
+            <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+              A faculty patron does two things: they sign off on your existence inside the institution, and they signal to skeptical administrators that this isn't a fringe project.
+            </p>
+            <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+              In all of the associations the patron came from psychiatry, pharmacology, or psychology — but a philosophy or anthropology professor works just as well. What matters is institutional credibility and openness.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="mission" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+            Part 2
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Make It a Psychedelic Student Association</h2>
+          <p class="mt-6 text-base leading-relaxed text-ink-soft">
+            The administrative shell is the same as any student club. What follows is what makes yours specifically a psychedelic association — and what will keep it credible, safe, and welcomed by the university.
+          </p>
+        </aside>
+        <div class="space-y-16">
+          <section data-reveal>
+            <h3 class="flex items-center gap-3 text-3xl font-black">
+              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+              Define the mission clearly
+            </h3>
+            <p class="mt-4 max-w-3xl text-lg leading-relaxed text-ink-soft">
+              Borrow the formulation we converged on across SPSN, UNEPSI and PSNG. State explicitly what you are — and what you are not.
+            </p>
+            <div class="mt-8 grid gap-8 md:grid-cols-2">
+              <div>
+                <p class="border-b border-olive-700 pb-3 text-sm font-bold uppercase text-olive-700">What it IS</p>
+                <ul class="divide-y divide-rule">
+                  {isItems.map((item, index) => (
+                    <li class="flex gap-3 py-4 text-lg leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                      <span class="guide-icon mt-1 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCheck} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p class="border-b border-[#7a1f1f] pb-3 text-sm font-bold uppercase text-[#7a1f1f]">What it is NOT</p>
+                <ul class="divide-y divide-rule">
+                  {notItems.map((item, index) => (
+                    <li class="flex gap-3 py-4 text-lg leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                      <span class="guide-icon mt-1 h-5 w-5 shrink-0 text-[#7a1f1f]" aria-hidden="true" set:html={IconX} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid gap-10 md:grid-cols-2" data-reveal>
+            <div>
+              <h3 class="flex items-center gap-3 text-3xl font-black">
+                <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconShieldCheck} />
+                Adopt a Code of Ethical Conduct from day one
+              </h3>
+              <ul class="mt-6 divide-y divide-rule border-y border-rule">
+                {ethics.map((item, index) => (
+                  <li class="flex gap-3 py-4 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconShieldCheck} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 class="flex items-center gap-3 text-3xl font-black">
+                <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconPresentation} />
+                Activity formats that work
+              </h3>
+              <ul class="mt-6 divide-y divide-rule border-y border-rule">
+                {formats.map(({ icon, text }, index) => (
+                  <li class="flex gap-3 py-4 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={icon} />
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
+            <h3 class="flex items-center gap-3 text-xl font-bold">
+              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconLeaf} />
+              Case study: PALA's original four pillars
+            </h3>
+            <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+              When PALA launched at the University of Lausanne in 2019, we ran exactly four formats — and that is what kept us alive long enough to grow:
+            </p>
+            <ul class="mt-5 divide-y divide-rule border-y border-rule">
+              {palaPillars.map((item, index) => (
+                <li class="flex gap-3 py-3 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="swiss-model" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
+            Part 3
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Visual Reference: the Swiss Model</h2>
+        </aside>
+        <div class="space-y-12">
+          <p class="max-w-4xl text-2xl font-semibold leading-tight text-ink" data-reveal>
+            The Model: a single first university association (PALA — the seed), and what happens when several local associations coordinate into a national network (SPSN) hosting a rotating annual conference.
+          </p>
+
+          <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
+            <h3 class="flex items-center gap-3 text-xl font-bold">
+              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+              <span>Pick a memorable name, acronym, and logo : first thing to do. <span class="italic">Dream It</span> !</span>
+            </h3>
+            <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+              This sounds cosmetic. It isn't. A strong acronym and a recognisable logo are how people remember you, link to you, and decide whether to show up. Choose them on day one.
+            </p>
+            <ul class="mt-5 divide-y divide-rule border-y border-rule">
+              {namingAdvice.map((item, index) => (
+                <li class="flex gap-3 py-3 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
+                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <figure class="overflow-hidden rounded-sm border border-rule bg-paper-alt" data-reveal>
+              <img
+                class="aspect-video w-full bg-white object-cover"
+                src="/assets/pala.jpg"
+                alt="PALA model slide showing goals, activity formats, Swiss university associations, and reasons the local student association model works."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="border-t border-rule p-4 text-sm italic leading-relaxed text-ink-soft">
+                Figure 1 — Exemple of a university association: PALA, Lausanne (2019). Goals, four core formats, and the three reasons it works.
+              </figcaption>
+            </figure>
+            <figure class="overflow-hidden rounded-sm border border-rule bg-paper-alt" data-reveal style="--reveal-delay: 120ms">
+              <img
+                class="aspect-video w-full bg-white object-cover"
+                src="/assets/spsn.jpg"
+                alt="Swiss Psychedelic Student Network slide showing local student associations connected into a national network and yearly student conference."
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="border-t border-rule p-4 text-sm italic leading-relaxed text-ink-soft">
+                Figure 2 — A national network: SPSN connects 7 of 9 Swiss universities with a rotating yearly conference.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="kickstart" data-reveal>
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
+            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconRoute} />
+            Part 4
+          </p>
+          <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Practical Kickstart and the European Network</h2>
+          <p class="mt-6 text-base leading-relaxed text-ink-soft">
+            These are the two concrete actions that turned every associations from an idea into a real active group.
+          </p>
+        </aside>
+        <div class="space-y-16">
+          <section class="space-y-5 border-y border-rule py-8" data-reveal>
+            <h3 class="flex items-center gap-3 text-2xl font-bold">
+              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconForms} />
+              Action 1 — A Google Form for your country
+            </h3>
+            <p class="text-lg leading-relaxed text-ink-soft">
+              Before anything formal, find your people. Create a short Google Form and circulate it through every channel you have — student WhatsApp groups, faculty mailing lists, Instagram, PAREA / PSNG / UNEPSI / SPSN networks, conference contacts.
+            </p>
+            <p class="text-lg leading-relaxed text-ink-soft">
+              Recommended fields: name and surname, email, phone number, university and city, field of study, willingness to help create an association at their university (Yes / Maybe / Just curious), optional motivation note.
+            </p>
+          </section>
+
+          <section class="space-y-5 border-y border-rule py-8" data-reveal>
+            <h3 class="flex items-center gap-3 text-2xl font-bold">
+              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconBrandWhatsapp} />
+              Action 2 — One WhatsApp group per country, plus city sub-groups
+            </h3>
+            <p class="text-lg leading-relaxed text-ink-soft">
+              As soon as the form is live, create a national WhatsApp community and add everyone who said yes or maybe. Within two weeks you will see natural city clusters emerge — each one becomes the seed of a local university association. Spin up a sub-group per city and let them self-organise.
+            </p>
+            <p class="text-lg leading-relaxed text-ink-soft">
+              This is exactly how UNEPSI grew bottom-up in Italy and how PSNG seeded its first local Ortsgruppen in Germany.
+            </p>
+          </section>
+
+          <section data-reveal>
+            <h3 class="flex items-center gap-3 text-3xl font-black">
+              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
+              Plug into the European network
+            </h3>
+            <p class="mt-5 max-w-3xl text-lg leading-relaxed text-ink-soft">
+              You are not alone. Use these resources from day one — the cost of duplicating work that already exists is the single biggest mistake we made early on. The motto for student cooperation is “Copy-pase, Evidence-based!”
+            </p>
+            <p class="mt-4 max-w-3xl text-lg leading-relaxed text-ink-soft">
+              Be free to ask these organisations documents, informations and tips :
+            </p>
+            <ul class="mt-8 divide-y divide-rule border-y border-rule">
+              {resources.map(([label, href], index) => (
+                <li data-reveal style={revealStyle(index)}>
+                  <a class="flex items-center justify-between gap-6 py-4 text-base font-semibold text-ink transition hover:text-olive-700" href={href} target="_blank" rel="noreferrer">
+                    <span>{label}</span>
+                    <span class="guide-icon h-5 w-5 shrink-0" aria-hidden="true" set:html={IconExternalLink} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section data-reveal>
+            <h3 class="flex items-center gap-3 text-3xl font-black">
+              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
+              REAL WORLD DEVELOPEMENT YOU CAN CITE
+            </h3>
+            <div class="mt-6 overflow-hidden rounded-sm border border-rule">
+              {timeline.map(([year, item], index) => (
+                <div class="grid gap-4 border-b border-rule last:border-b-0 md:grid-cols-[9rem_1fr]" data-reveal style={revealStyle(index)}>
+                  <p class="bg-olive-100/70 p-4 font-bold text-olive-950">{year}</p>
+                  <p class="flex gap-3 p-4 leading-relaxed text-ink-soft">
+                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
+                    <span>{item}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <aside class="rounded-sm border border-olive-900/45 bg-gradient-to-br from-olive-950 via-olive-900 to-ink p-6 text-paper" data-reveal>
+            <h3 class="flex items-center gap-3 text-2xl font-black">
+              <span class="guide-icon h-7 w-7 text-olive-200" aria-hidden="true" set:html={IconLeaf} />
+              Remember
+            </h3>
+            <ul class="mt-5 divide-y divide-paper/25 border-y border-paper/25">
+              {remember.map((item, index) => (
+                <li class="flex gap-3 py-3 leading-relaxed text-paper/90" data-reveal style={revealStyle(index)}>
+                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-200" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <footer class="grid gap-10 border-t border-ink py-10 text-sm text-ink-soft lg:grid-cols-[0.68fr_1.32fr] lg:gap-16" data-reveal>
+        <div class="space-y-5">
+          <a class="block w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
+            <span class="alps-logo-mask alps-logo-mask--footer" aria-hidden="true"></span>
+          </a>
+          <p class="font-semibold uppercase text-ink">v1_07052026</p>
+        </div>
+        <div class="grid gap-8 md:grid-cols-2">
+          <div class="space-y-4">
+            <p class="font-semibold text-ink">How to Start a Psychedelic Student Association at Your University</p>
+            <p>A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network.</p>
+          </div>
+          <div class="flex flex-col gap-5 md:flex-row md:items-start">
+            <p>
+              Built with Switzer Font by <a class="text-ink underline decoration-olive-700/40 underline-offset-4 transition hover:text-olive-700" href="https://www.indiantypefoundry.com/" target="_blank" rel="noreferrer">Indian Type Foundry</a>, <a class="text-ink underline decoration-olive-700/40 underline-offset-4 transition hover:text-olive-700" href="https://tabler.io/icons" target="_blank" rel="noreferrer">Tabler Icons</a>, and <a class="text-ink underline decoration-olive-700/40 underline-offset-4 transition hover:text-olive-700" href="https://astro.build" target="_blank" rel="noreferrer">Astro.build</a>.
+            </p>
+            <a class="flex items-center gap-2 border-t border-rule pt-5 text-ink transition hover:text-olive-700 md:border-t-0 md:border-l md:pt-0 md:pl-5" href="https://github.com/alpsfoundation/guide.alps.foundation" target="_blank" rel="noreferrer">
+              <span class="guide-icon h-5 w-5 shrink-0" aria-hidden="true" set:html={IconBrandGithub} />
+              <span>Source on GitHub.com</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </main>
+    <script>
+      const revealElements = document.querySelectorAll("[data-reveal]");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        revealElements.forEach((element) => element.classList.add("is-visible"));
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          {
+            rootMargin: "0px 0px -8% 0px",
+            threshold: 0.12,
+          },
+        );
+
+        revealElements.forEach((element) => revealObserver.observe(element));
+      }
+    </script>
+  </body>
 </html>
