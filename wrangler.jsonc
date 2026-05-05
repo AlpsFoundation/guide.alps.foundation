@@ -3,6 +3,11 @@
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "guide-alps-foundation",
 	"main": "@astrojs/cloudflare/entrypoints/server",
+	// Production hostname (requires zone alps.foundation on this account).
+	"routes": [{ "pattern": "guide.alps.foundation", "custom_domain": true }],
+	// *.workers.dev for the stable deploy + version/branch preview URLs from CI.
+	"workers_dev": true,
+	"preview_urls": true,
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
