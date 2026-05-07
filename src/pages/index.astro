@@ -81,12 +81,12 @@ const notItems = [
 ];
 
 const ethics = [
-  "Respect, inclusion, and substance-free events on university premises.",
-  "Scientific integrity: distinguish established research, open questions, and personal experience.",
-  "Personal experiences may be shared as subjective perspective only, never as general advice.",
-  "No advertising, mediating, or facilitating access to controlled substances.",
-  "No therapeutic or medical posture; refer participants in distress to professional services.",
-  "Confidentiality of personal content shared in the group.",
+  { icon: IconHeartHandshake, text: "Respect, inclusion, and substance-free events on university premises." },
+  { icon: IconMicroscope, text: "Scientific integrity: distinguish established research, open questions, and personal experience." },
+  { icon: IconUsersGroup, text: "Personal experiences may be shared as subjective perspective only, never as general advice." },
+  { icon: IconShieldCheck, text: "No advertising, mediating, or facilitating access to controlled substances." },
+  { icon: IconSchool, text: "No therapeutic or medical posture; refer participants in distress to professional services." },
+  { icon: IconFileText, text: "Confidentiality of personal content shared in the group." },
 ];
 
 const formats = [
@@ -115,11 +115,31 @@ const namingAdvice = [
 ];
 
 const resources = [
-  ["ALPS Foundation — Psychedelic Student Association Consulting Service: alps.foundation/psychedelic-student-association-consulting-service", "https://www.alps.foundation/psychedelic-student-association-consulting-service"],
-  ["Swiss Psychedelic Student Network (SPSN): alps.foundation/swiss-psychedelic-student-network", "https://www.alps.foundation/swiss-psychedelic-student-network"],
-  ["Psychedelic Student Network Germany (PSNG) — full founding guide: psng.info", "https://www.psng.info"],
-  ["PAREA — pan-European partnership and Forum 2026: parea.eu", "https://parea.eu"],
-  ["Seminal Andrew Sewell’s article which generated all of this (MAPS bulletin - 2006) : https://maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher/", "https://maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher/"],
+  {
+    title: "ALPS Foundation — Psychedelic Student Association Consulting Service",
+    displayUrl: "alps.foundation/psychedelic-student-association-consulting-service",
+    href: "https://www.alps.foundation/psychedelic-student-association-consulting-service",
+  },
+  {
+    title: "Swiss Psychedelic Student Network (SPSN)",
+    displayUrl: "alps.foundation/swiss-psychedelic-student-network",
+    href: "https://www.alps.foundation/swiss-psychedelic-student-network",
+  },
+  {
+    title: "Psychedelic Student Network Germany (PSNG) — full founding guide",
+    displayUrl: "psng.info",
+    href: "https://www.psng.info",
+  },
+  {
+    title: "PAREA — pan-European partnership and Forum 2026",
+    displayUrl: "parea.eu",
+    href: "https://parea.eu",
+  },
+  {
+    title: "Andrew Sewell's MAPS bulletin article that helped seed the movement",
+    displayUrl: "maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher",
+    href: "https://maps.org/2010/06/22/so-you-want-to-be-a-psychedelic-researcher/",
+  },
 ];
 
 const timeline = [
@@ -134,6 +154,37 @@ const remember = [
   "Set realistic expectations: 5 committed people > 50 vague ones.",
   "You are not alone — write to ALPS, SPSN, UNEPSI, PSNG. We have all been where you are.",
   "Honour the Code of Ethical Conduct. Legitimacy and honesty are your most valuable assets.",
+];
+
+const guideParts = [
+  {
+    id: "register",
+    number: "1",
+    title: "Register",
+    label: "Register the association",
+    icon: IconClipboardCheck,
+  },
+  {
+    id: "mission",
+    number: "2",
+    title: "Define",
+    label: "Define the mission",
+    icon: IconTargetArrow,
+  },
+  {
+    id: "swiss-model",
+    number: "3",
+    title: "Map",
+    label: "Map the model",
+    icon: IconNetwork,
+  },
+  {
+    id: "kickstart",
+    number: "4",
+    title: "Launch",
+    label: "Launch the network",
+    icon: IconRoute,
+  },
 ];
 
 const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 390)}ms`;
@@ -169,7 +220,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
     </script>
   </head>
   <body>
-    <main class="mx-auto min-h-screen w-full max-w-[1720px] px-5 py-5 text-ink sm:px-8 lg:px-12">
+    <main class="mx-auto min-h-screen w-full max-w-[1720px] px-5 pt-5 pb-28 text-ink sm:px-8 lg:px-12">
       <header class="grid min-h-[90vh] overflow-hidden rounded-sm border border-olive-900/50 bg-gradient-to-br from-olive-50 via-paper to-olive-200/60 p-5 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:p-8" data-reveal>
         <div class="flex flex-col justify-between gap-12">
           <a class="sticky top-8 z-10 w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
@@ -190,7 +241,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
       <section class="grid gap-10 py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconCompass} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCompass} />
             Why start one
           </p>
         </aside>
@@ -212,7 +263,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
       <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconMapPin} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconMapPin} />
             Origin
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink to-olive-700 bg-clip-text text-4xl font-black leading-tight text-transparent">Where does this guide comes from</h2>
@@ -233,7 +284,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
       <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconSchool} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconSchool} />
             WHAT YOU ARE BUILDING
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink to-olive-700 bg-clip-text text-4xl font-black leading-tight text-transparent">Principle into campus practice</h2>
@@ -267,10 +318,34 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
         </div>
       </section>
 
-      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="register" data-reveal>
+      <div class="guide-workflow" data-guide-workflow>
+        <nav class="scrollspy-nav" aria-label="Guide parts" data-scrollspy-nav>
+          <div class="scrollspy-nav__track" aria-hidden="true">
+            <span class="scrollspy-nav__progress" data-scrollspy-progress></span>
+          </div>
+          <ol class="scrollspy-nav__list">
+            {guideParts.map((part) => (
+              <li class="scrollspy-nav__item">
+                <a class="scrollspy-link" href={`#${part.id}`} data-scrollspy-link data-scrollspy-id={part.id} aria-label={`Part ${part.number}: ${part.label}`}>
+                  <span class="guide-icon scrollspy-link__icon" aria-hidden="true" set:html={part.icon} />
+                  <span class="scrollspy-link__marker" aria-hidden="true">
+                    <span class="scrollspy-link__number">{part.number}</span>
+                    <span class="guide-icon scrollspy-link__check" set:html={IconCheck} />
+                  </span>
+                  <span class="scrollspy-link__copy">
+                    <span class="scrollspy-link__part">Part {part.number}</span>
+                    <span class="scrollspy-link__title">{part.title}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <section class="grid scroll-mt-6 gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="register" data-guide-part data-scrollspy-label="Register the association" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconClipboardCheck} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconClipboardCheck} />
             Part 1
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Register a Student Association at Your University</h2>
@@ -295,7 +370,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
           </ol>
           <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
             <h3 class="flex items-center gap-3 text-xl font-bold">
-              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconSchool} />
+              <span class="guide-icon h-6 w-6 shrink-0 text-olive-700" aria-hidden="true" set:html={IconSchool} />
               Tip: choose your patron carefully
             </h3>
             <p class="mt-4 text-lg leading-relaxed text-ink-soft">
@@ -306,12 +381,12 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
             </p>
           </aside>
         </div>
-      </section>
+        </section>
 
-      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="mission" data-reveal>
+        <section class="grid scroll-mt-6 gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="mission" data-guide-part data-scrollspy-label="Define the mission" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
             Part 2
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Make It a Psychedelic Student Association</h2>
@@ -322,7 +397,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
         <div class="space-y-16">
           <section data-reveal>
             <h3 class="flex items-center gap-3 text-3xl font-black">
-              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+              <span class="guide-icon h-7 w-7 shrink-0 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
               Define the mission clearly
             </h3>
             <p class="mt-4 max-w-3xl text-lg leading-relaxed text-ink-soft">
@@ -334,7 +409,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
                 <ul class="divide-y divide-rule">
                   {isItems.map((item, index) => (
                     <li class="flex gap-3 py-4 text-lg leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                      <span class="guide-icon mt-1 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCheck} />
+                      <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={IconCheck} />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -345,7 +420,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
                 <ul class="divide-y divide-rule">
                   {notItems.map((item, index) => (
                     <li class="flex gap-3 py-4 text-lg leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                      <span class="guide-icon mt-1 h-5 w-5 shrink-0 text-[#7a1f1f]" aria-hidden="true" set:html={IconX} />
+                      <span class="guide-icon list-icon h-5 w-5 text-[#7a1f1f]" aria-hidden="true" set:html={IconX} />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -357,27 +432,27 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
           <section class="grid gap-10 md:grid-cols-2" data-reveal>
             <div>
               <h3 class="flex items-center gap-3 text-3xl font-black">
-                <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconShieldCheck} />
+                <span class="guide-icon h-7 w-7 shrink-0 text-olive-700" aria-hidden="true" set:html={IconShieldCheck} />
                 Adopt a Code of Ethical Conduct from day one
               </h3>
               <ul class="mt-6 divide-y divide-rule border-y border-rule">
-                {ethics.map((item, index) => (
+                {ethics.map(({ icon, text }, index) => (
                   <li class="flex gap-3 py-4 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconShieldCheck} />
-                    <span>{item}</span>
+                    <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={icon} />
+                    <span>{text}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
               <h3 class="flex items-center gap-3 text-3xl font-black">
-                <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconPresentation} />
+                <span class="guide-icon h-7 w-7 shrink-0 text-olive-700" aria-hidden="true" set:html={IconPresentation} />
                 Activity formats that work
               </h3>
               <ul class="mt-6 divide-y divide-rule border-y border-rule">
                 {formats.map(({ icon, text }, index) => (
                   <li class="flex gap-3 py-4 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={icon} />
+                    <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={icon} />
                     <span>{text}</span>
                   </li>
                 ))}
@@ -387,7 +462,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
             <h3 class="flex items-center gap-3 text-xl font-bold">
-              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconLeaf} />
+              <span class="guide-icon h-6 w-6 shrink-0 text-olive-700" aria-hidden="true" set:html={IconLeaf} />
               Case study: PALA's original four pillars
             </h3>
             <p class="mt-4 text-lg leading-relaxed text-ink-soft">
@@ -396,19 +471,19 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
             <ul class="mt-5 divide-y divide-rule border-y border-rule">
               {palaPillars.map((item, index) => (
                 <li class="flex gap-3 py-3 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </aside>
         </div>
-      </section>
+        </section>
 
-      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="swiss-model" data-reveal>
+        <section class="grid scroll-mt-6 gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="swiss-model" data-guide-part data-scrollspy-label="Map the model" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
             Part 3
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Visual Reference: the Swiss Model</h2>
@@ -420,7 +495,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <aside class="rounded-sm border border-olive-800/40 bg-gradient-to-br from-olive-100 to-paper p-6" data-reveal>
             <h3 class="flex items-center gap-3 text-xl font-bold">
-              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
+              <span class="guide-icon h-6 w-6 shrink-0 text-olive-700" aria-hidden="true" set:html={IconTargetArrow} />
               <span>Pick a memorable name, acronym, and logo : first thing to do. <span class="italic">Dream It</span> !</span>
             </h3>
             <p class="mt-4 text-lg leading-relaxed text-ink-soft">
@@ -429,7 +504,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
             <ul class="mt-5 divide-y divide-rule border-y border-rule">
               {namingAdvice.map((item, index) => (
                 <li class="flex gap-3 py-3 text-base leading-relaxed text-ink-soft" data-reveal style={revealStyle(index)}>
-                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={IconCircleCheck} />
                   <span>{item}</span>
                 </li>
               ))}
@@ -463,12 +538,12 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
             </figure>
           </div>
         </div>
-      </section>
+        </section>
 
-      <section class="grid gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="kickstart" data-reveal>
+        <section class="grid scroll-mt-6 gap-10 border-t border-ink py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" id="kickstart" data-guide-part data-scrollspy-label="Launch the network" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <p class="flex items-center gap-4 text-2xl font-semibold uppercase text-ink-soft">
-            <span class="guide-icon h-8 w-8 text-olive-700" aria-hidden="true" set:html={IconRoute} />
+            <span class="guide-icon h-8 w-8 shrink-0 text-olive-700" aria-hidden="true" set:html={IconRoute} />
             Part 4
           </p>
           <h2 class="mt-4 bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text text-5xl font-black leading-tight text-transparent">Practical Kickstart and the European Network</h2>
@@ -479,7 +554,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
         <div class="space-y-16">
           <section class="space-y-5 border-y border-rule py-8" data-reveal>
             <h3 class="flex items-center gap-3 text-2xl font-bold">
-              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconForms} />
+              <span class="guide-icon h-6 w-6 shrink-0 text-olive-700" aria-hidden="true" set:html={IconForms} />
               Action 1 — A Google Form for your country
             </h3>
             <p class="text-lg leading-relaxed text-ink-soft">
@@ -492,7 +567,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <section class="space-y-5 border-y border-rule py-8" data-reveal>
             <h3 class="flex items-center gap-3 text-2xl font-bold">
-              <span class="guide-icon h-6 w-6 text-olive-700" aria-hidden="true" set:html={IconBrandWhatsapp} />
+              <span class="guide-icon h-6 w-6 shrink-0 text-olive-700" aria-hidden="true" set:html={IconBrandWhatsapp} />
               Action 2 — One WhatsApp group per country, plus city sub-groups
             </h3>
             <p class="text-lg leading-relaxed text-ink-soft">
@@ -505,7 +580,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <section data-reveal>
             <h3 class="flex items-center gap-3 text-3xl font-black">
-              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
+              <span class="guide-icon h-7 w-7 shrink-0 text-olive-700" aria-hidden="true" set:html={IconNetwork} />
               Plug into the European network
             </h3>
             <p class="mt-5 max-w-3xl text-lg leading-relaxed text-ink-soft">
@@ -515,11 +590,14 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
               Be free to ask these organisations documents, informations and tips :
             </p>
             <ul class="mt-8 divide-y divide-rule border-y border-rule">
-              {resources.map(([label, href], index) => (
+              {resources.map(({ title, displayUrl, href }, index) => (
                 <li data-reveal style={revealStyle(index)}>
-                  <a class="flex items-center justify-between gap-6 py-4 text-base font-semibold text-ink transition hover:text-olive-700" href={href} target="_blank" rel="noreferrer">
-                    <span>{label}</span>
-                    <span class="guide-icon h-5 w-5 shrink-0" aria-hidden="true" set:html={IconExternalLink} />
+                  <a class="resource-link" href={href} target="_blank" rel="noreferrer">
+                    <span class="resource-link__title">{title}</span>
+                    <span class="resource-link__badge">
+                      <span class="resource-link__url">{displayUrl}</span>
+                      <span class="guide-icon resource-link__icon" aria-hidden="true" set:html={IconExternalLink} />
+                    </span>
                   </a>
                 </li>
               ))}
@@ -528,7 +606,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <section data-reveal>
             <h3 class="flex items-center gap-3 text-3xl font-black">
-              <span class="guide-icon h-7 w-7 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
+              <span class="guide-icon h-7 w-7 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
               REAL WORLD DEVELOPEMENT YOU CAN CITE
             </h3>
             <div class="mt-6 overflow-hidden rounded-sm border border-rule">
@@ -536,7 +614,7 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
                 <div class="grid gap-4 border-b border-rule last:border-b-0 md:grid-cols-[9rem_1fr]" data-reveal style={revealStyle(index)}>
                   <p class="bg-olive-100/70 p-4 font-bold text-olive-950">{year}</p>
                   <p class="flex gap-3 p-4 leading-relaxed text-ink-soft">
-                    <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
+                    <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
                     <span>{item}</span>
                   </p>
                 </div>
@@ -546,27 +624,28 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
           <aside class="rounded-sm border border-olive-900/45 bg-gradient-to-br from-olive-950 via-olive-900 to-ink p-6 text-paper" data-reveal>
             <h3 class="flex items-center gap-3 text-2xl font-black">
-              <span class="guide-icon h-7 w-7 text-olive-200" aria-hidden="true" set:html={IconLeaf} />
+              <span class="guide-icon h-7 w-7 shrink-0 text-olive-200" aria-hidden="true" set:html={IconLeaf} />
               Remember
             </h3>
             <ul class="mt-5 divide-y divide-paper/25 border-y border-paper/25">
               {remember.map((item, index) => (
                 <li class="flex gap-3 py-3 leading-relaxed text-paper/90" data-reveal style={revealStyle(index)}>
-                  <span class="guide-icon mt-0.5 h-5 w-5 shrink-0 text-olive-200" aria-hidden="true" set:html={IconCircleCheck} />
+                  <span class="guide-icon list-icon h-5 w-5 text-olive-200" aria-hidden="true" set:html={IconCircleCheck} />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </aside>
         </div>
-      </section>
+        </section>
+      </div>
 
       <footer class="grid gap-10 border-t border-ink py-10 text-sm text-ink-soft lg:grid-cols-[0.68fr_1.32fr] lg:gap-16" data-reveal>
         <div class="space-y-5">
           <a class="block w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
             <span class="alps-logo-mask alps-logo-mask--footer" aria-hidden="true"></span>
           </a>
-          <p class="font-semibold uppercase text-ink">v1_07052026</p>
+          <p class="font-semibold uppercase text-ink">V1_20260507</p>
         </div>
         <div class="grid gap-8 md:grid-cols-2">
           <div class="space-y-4">
@@ -609,6 +688,80 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
 
         revealElements.forEach((element) => revealObserver.observe(element));
       }
+
+      const guideSections = Array.from(document.querySelectorAll("[data-guide-part]"));
+      const guideLinks = Array.from(document.querySelectorAll("[data-scrollspy-link]"));
+      const guideWorkflow = document.querySelector("[data-guide-workflow]");
+      const scrollspyNav = document.querySelector("[data-scrollspy-nav]");
+      const scrollspyProgress = document.querySelector("[data-scrollspy-progress]");
+      let scrollspyFrame = 0;
+      let scrollspyClickLockUntil = 0;
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+      const setGuideStatus = (activeIndex, progressPercent, isComplete = false) => {
+        guideLinks.forEach((link, index) => {
+          const status = isComplete && index <= activeIndex ? "complete" : index < activeIndex ? "complete" : index === activeIndex ? "current" : "upcoming";
+          link.setAttribute("data-status", status);
+
+          if (!isComplete && index === activeIndex) {
+            link.setAttribute("aria-current", "step");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+
+        if (scrollspyProgress) {
+          scrollspyProgress.style.setProperty("--scrollspy-progress", `${clamp(progressPercent, 0, 100)}%`);
+        }
+      };
+
+      const setActiveGuidePart = () => {
+        scrollspyFrame = 0;
+        if (!guideSections.length || !guideLinks.length) return;
+        if (performance.now() < scrollspyClickLockUntil) return;
+
+        const anchorLine = window.innerHeight * 0.42;
+        const anchorDocumentY = window.scrollY + anchorLine;
+        let activeIndex = 0;
+        const firstSectionRect = guideSections[0].getBoundingClientRect();
+
+        if (scrollspyNav) {
+          scrollspyNav.classList.toggle("is-sticky", firstSectionRect.top <= window.innerHeight);
+        }
+
+        guideSections.forEach((section, index) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= anchorLine) {
+            activeIndex = index;
+          }
+        });
+
+        const activeSection = guideSections[activeIndex];
+        const sectionStart = activeSection.offsetTop;
+        const sectionEnd = sectionStart + activeSection.offsetHeight;
+        const sectionProgress = clamp((anchorDocumentY - sectionStart) / Math.max(sectionEnd - sectionStart, 1), 0, 1);
+        const finalSection = guideSections[guideSections.length - 1];
+        const finalSectionEnd = finalSection.offsetTop + finalSection.offsetHeight;
+        const isComplete = anchorDocumentY >= finalSectionEnd || (guideWorkflow && guideWorkflow.getBoundingClientRect().bottom <= window.innerHeight);
+        const progressPercent = isComplete ? 100 : ((activeIndex + sectionProgress) / guideSections.length) * 100;
+
+        setGuideStatus(activeIndex, progressPercent, isComplete);
+      };
+
+      const requestScrollspyUpdate = () => {
+        if (scrollspyFrame) return;
+        scrollspyFrame = window.requestAnimationFrame(setActiveGuidePart);
+      };
+
+      setActiveGuidePart();
+      guideLinks.forEach((link, index) => {
+        link.addEventListener("click", () => {
+          scrollspyClickLockUntil = performance.now() + 900;
+          setGuideStatus(index, (index / guideSections.length) * 100);
+        });
+      });
+      window.addEventListener("scroll", requestScrollspyUpdate, { passive: true });
+      window.addEventListener("resize", requestScrollspyUpdate);
     </script>
   </body>
 </html>
