@@ -1,43 +1,51 @@
-# Astro Starter Kit: Minimal
+![](public/og-image.png)
+
+# guide.alps.foundation
+
+A single-page guide for students who want to start a psychedelic society at their university — registration, ethics, programming formats, and how to plug into the European network coordinated by [ALPS](https://alps.foundation).
+
+The whole site is one Astro page (`src/pages/index.astro`) with content authored as inline data arrays in the frontmatter. Visual direction is documented in [`DESIGN.md`](./DESIGN.md).
+
+## Stack
+
+- **Astro 6** with the `@astrojs/cloudflare` adapter — deployed as a Cloudflare Worker, custom domain `guide.alps.foundation`.
+- **Tailwind v4** via `@tailwindcss/vite`. Design tokens live in `src/styles/global.css` under `@theme`.
+- **Switzer** (variable, self-hosted from `public/fonts/`) and **Tabler Icons** (inlined as raw SVG).
+- **pnpm** package manager, Node `>=22.12.0`.
+
+## Commands
+
+| Command                | Action                                                    |
+| :--------------------- | :-------------------------------------------------------- |
+| `pnpm install`         | Install dependencies                                      |
+| `pnpm dev`             | Start the dev server at `localhost:4321`                  |
+| `pnpm build`           | Build to `./dist/` (client assets in `dist/client/`)      |
+| `pnpm preview`         | Preview the production build locally                      |
+| `pnpm astro check`     | Type-check `.astro` files                                 |
+| `pnpm generate-types`  | Regenerate Cloudflare Worker bindings (`wrangler types`)  |
+| `pnpm generate-og`     | Regenerate `public/og-image.png` (see below)              |
+
+## Editing content
+
+All copy lives in the frontmatter constants of `src/pages/index.astro` (`registrationSteps`, `principles`, `isItems`, `notItems`, `ethics`, `formats`, `palaPillars`, `namingAdvice`, `resources`, `timeline`, `remember`). Edit those arrays — the markup `.map()`s over them.
+
+## Open Graph image
+
+`public/og-image.png` is the social preview shown when the page is shared. It is committed to the repo and regenerated as a one-off via:
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm generate-og
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The script (`scripts/generate-og.mjs`) uses headless Chromium (Playwright) to render an HTML layout with the real Switzer woff2 font and the masked ALPS logo gradient, then screenshots a 1200×630 PNG. Run it again whenever the title or tagline changes — the source strings live at the top of the script.
 
-## 🚀 Project Structure
+First-time setup on a new machine:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+pnpm install
+npx playwright install chromium
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Pushes to `main` deploy to Cloudflare. `wrangler.jsonc` configures the production hostname and the static asset binding; `@astrojs/cloudflare` writes the effective `dist/server/wrangler.json` at build time, pointing the assets binding at `dist/client/`.

@@ -147,7 +147,23 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network." />
     <meta name="generator" content={Astro.generator} />
-    <title>How to Start a Psychedelic Student Association</title>
+    <title>How to Start a Psychedelic Student Association at Your University</title>
+    <link rel="canonical" href="https://guide.alps.foundation/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="ALPS Foundation" />
+    <meta property="og:url" content="https://guide.alps.foundation/" />
+    <meta property="og:title" content="How to Start a Psychedelic Student Association at Your University" />
+    <meta property="og:description" content="A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network." />
+    <meta property="og:image" content="https://guide.alps.foundation/og-image.png" />
+    <meta property="og:image:secure_url" content="https://guide.alps.foundation/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="How to Start a Psychedelic Student Association at Your University — guide.alps.foundation" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Start a Psychedelic Student Association at Your University" />
+    <meta name="twitter:description" content="A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network." />
+    <meta name="twitter:image" content="https://guide.alps.foundation/og-image.png" />
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>
@@ -223,19 +239,31 @@ const revealStyle = (index: number) => `--reveal-delay: ${Math.min(index * 65, 3
           <h2 class="mt-4 bg-gradient-to-br from-ink to-olive-700 bg-clip-text text-4xl font-black leading-tight text-transparent">Principle into campus practice</h2>
         </aside>
         <div class="overflow-hidden rounded-sm border border-rule bg-paper/70">
-          <div class="grid grid-cols-[0.35fr_0.65fr] border-b border-rule bg-olive-100/80 text-sm font-bold uppercase text-olive-950">
-            <p class="p-4">Principle</p>
-            <p class="border-l border-rule p-4">How it shows up on campus</p>
-          </div>
-          {principles.map(({ icon, principle, campus }, index) => (
-            <div class="grid grid-cols-[0.35fr_0.65fr] border-b border-rule last:border-b-0" data-reveal style={revealStyle(index)}>
-              <p class="flex items-center gap-3 p-4 font-semibold text-ink">
-                <span class="guide-icon h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={icon} />
-                <span>{principle}</span>
-              </p>
-              <p class="border-l border-rule p-4 leading-relaxed text-ink-soft">{campus}</p>
-            </div>
-          ))}
+          <table class="block w-full text-left md:table md:table-fixed">
+            <colgroup class="hidden md:table-column-group">
+              <col class="md:w-[35%]" />
+              <col class="md:w-[65%]" />
+            </colgroup>
+            <thead class="hidden bg-olive-100/80 text-sm font-bold uppercase text-olive-950 md:table-header-group">
+              <tr>
+                <th scope="col" class="border-b border-rule p-4 font-bold">Principle</th>
+                <th scope="col" class="border-b border-l border-rule p-4 font-bold">How it shows up on campus</th>
+              </tr>
+            </thead>
+            <tbody class="block md:table-row-group">
+              {principles.map(({ icon, principle, campus }, index) => (
+                <tr class="block border-b border-rule last:border-b-0 md:table-row md:align-top" data-reveal style={revealStyle(index)}>
+                  <th scope="row" class="block p-4 text-left font-semibold text-ink md:table-cell">
+                    <span class="flex items-center gap-3">
+                      <span class="guide-icon h-5 w-5 shrink-0 text-olive-700" aria-hidden="true" set:html={icon} />
+                      <span>{principle}</span>
+                    </span>
+                  </th>
+                  <td class="block px-4 pb-4 leading-relaxed text-ink-soft md:table-cell md:border-l md:border-rule md:p-4">{campus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
