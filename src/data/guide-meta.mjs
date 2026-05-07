@@ -29,6 +29,12 @@ export const guideMeta = {
       "Una guía práctica para estudiantes que quieren llevar educación psicodélica basada en evidencia y reducción de riesgos a su campus, conectándose con la red europea en crecimiento.",
     ogImageAlt: "Cómo crear una asociación estudiantil psicodélica en tu universidad — guide.alps.foundation",
   },
+  pt: {
+    title: "Como criar uma associação estudantil psicadélica na vossa universidade",
+    description:
+      "Um guia prático para estudantes que querem levar educação psicadélica baseada em evidência e redução de riscos ao vosso campus, ligando-se à rede europeia em crescimento.",
+    ogImageAlt: "Como criar uma associação estudantil psicadélica na vossa universidade — guide.alps.foundation",
+  },
 };
 
 export const ogImageSize = {

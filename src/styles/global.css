@@ -97,6 +97,20 @@ body {
   animation: olive-logo-gradient 8s ease-in-out infinite alternate;
 }
 
+.alps-logo-mask--hero-image {
+  background:
+    linear-gradient(
+      110deg,
+      rgb(255 255 255 / 0.96) 0%,
+      rgb(255 255 255 / 0.66) 24%,
+      rgb(232 236 208 / 0.88) 48%,
+      rgb(255 255 255 / 0.72) 72%,
+      rgb(255 255 255 / 0.94) 100%
+    );
+  background-size: 240% 240%;
+  filter: drop-shadow(0 0.18rem 0.9rem rgb(20 20 15 / 0.32));
+}
+
 .alps-logo-mask--footer {
   width: clamp(8rem, 14vw, 11rem);
 }
@@ -155,6 +169,13 @@ body {
   hyphens: none;
   padding-bottom: 0.08em;
   text-wrap: balance;
+}
+
+.guide-translated-hero-title {
+  font-size: clamp(2rem, min(5.1vw, 6.2dvh), 5.4rem);
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .guide-kicker-title {
@@ -507,6 +528,11 @@ body {
   .guide-hero-title {
     font-size: clamp(2.25rem, min(10.2vw, 7.4dvh), 4rem);
     line-height: 1.1;
+  }
+
+  .guide-translated-hero-title {
+    font-size: clamp(1.85rem, min(8.6vw, 6.2dvh), 3.25rem);
+    line-height: 1.12;
   }
 
   .guide-kicker-title {

@@ -25,8 +25,10 @@ import IconShieldCheck from "@tabler/icons/outline/shield-check.svg?raw";
 import IconTargetArrow from "@tabler/icons/outline/target-arrow.svg?raw";
 import IconUsersGroup from "@tabler/icons/outline/users-group.svg?raw";
 import IconX from "@tabler/icons/outline/x.svg?raw";
-import { getLocalePath, guideContent, localeLabels, locales, type Locale } from "../data/guide";
+import { getLocalePath, guideContent, locales, type Locale } from "../data/guide";
 import { getOgImagePath, ogImageSize } from "../data/guide-meta.mjs";
+import GuideHero from "./GuideHero.astro";
+import TranslatedGuideHero from "./TranslatedGuideHero.astro";
 
 interface Props {
   locale: Locale;
@@ -86,8 +88,8 @@ const icon = {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content={ogImageSize.width} />
-    <meta property="og:image:height" content={ogImageSize.height} />
+    <meta property="og:image:width" content={String(ogImageSize.width)} />
+    <meta property="og:image:height" content={String(ogImageSize.height)} />
     <meta property="og:image:alt" content={content.meta.ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={content.meta.title} />
@@ -105,43 +107,11 @@ const icon = {
     )}
 
     <main class="guide-page mx-auto min-h-screen w-full max-w-[1720px] px-5 pt-5 pb-28 text-ink sm:px-8 lg:px-12">
-      <header class="relative grid min-h-[90vh] overflow-hidden rounded-sm border border-olive-900/50 bg-gradient-to-br from-olive-50 via-paper to-olive-200/60 p-5 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:p-8" data-reveal>
-        {showLanguageSwitcher && (
-          <nav class="language-switcher" aria-label={content.languageSwitcherLabel}>
-            <ul class="flex">
-              {locales.map((availableLocale) => (
-                <li class="border-r border-rule last:border-r-0">
-                  <a
-                    class:list={[
-                      "block px-3 py-2 transition hover:bg-olive-100 hover:text-ink",
-                      availableLocale === locale ? "bg-ink text-paper hover:bg-ink hover:text-paper" : "text-ink-soft",
-                    ]}
-                    href={getLocalePath(availableLocale)}
-                    aria-current={availableLocale === locale ? "page" : undefined}
-                  >
-                    {localeLabels[availableLocale]}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
-
-        <div class="flex flex-col justify-between gap-12">
-          <a class="sticky top-8 z-10 w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
-            <span class="alps-logo-mask alps-logo-mask--header" aria-hidden="true"></span>
-          </a>
-          <p class="max-w-sm border-l-2 border-olive-700 pl-5 text-base leading-relaxed text-ink-soft">
-            {content.hero.summary}
-          </p>
-        </div>
-
-        <section class="flex flex-col justify-end pt-20">
-          <h1 class="guide-hero-title max-w-6xl bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text font-black text-transparent">
-            {content.hero.title}
-          </h1>
-        </section>
-      </header>
+      {locale === "en" ? (
+        <GuideHero content={content} locale={locale} showLanguageSwitcher={showLanguageSwitcher} />
+      ) : (
+        <TranslatedGuideHero content={content} locale={locale} showLanguageSwitcher={showLanguageSwitcher} />
+      )}
 
       <section class="grid gap-10 py-20 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:py-28" data-reveal>
         <aside class="lg:sticky lg:top-6 lg:self-start">
@@ -446,12 +416,12 @@ const icon = {
                 <span class="guide-text-wrap min-w-0">{content.kickstart.timelineTitle}</span>
               </h3>
               <div class="mt-6 overflow-hidden rounded-sm border border-rule">
-                {content.kickstart.timeline.map(([year, item], index) => (
+                {content.kickstart.timeline.map(({ year, text }, index) => (
                   <div class="grid gap-4 border-b border-rule last:border-b-0 md:grid-cols-[9rem_1fr]" data-reveal style={revealStyle(index)}>
                     <p class="bg-olive-100/70 p-4 font-bold text-olive-950">{year}</p>
                     <p class="flex gap-3 p-4 leading-relaxed text-ink-soft">
                       <span class="guide-icon list-icon h-5 w-5 text-olive-700" aria-hidden="true" set:html={IconCalendarEvent} />
-                      <span>{item}</span>
+                      <span>{text}</span>
                     </p>
                   </div>
                 ))}
@@ -525,16 +495,16 @@ const icon = {
         revealElements.forEach((element) => revealObserver.observe(element));
       }
 
-      const guideSections = Array.from(document.querySelectorAll("[data-guide-part]"));
-      const guideLinks = Array.from(document.querySelectorAll("[data-scrollspy-link]"));
-      const guideWorkflow = document.querySelector("[data-guide-workflow]");
-      const scrollspyNav = document.querySelector("[data-scrollspy-nav]");
-      const scrollspyProgress = document.querySelector("[data-scrollspy-progress]");
+      const guideSections = Array.from(document.querySelectorAll<HTMLElement>("[data-guide-part]"));
+      const guideLinks = Array.from(document.querySelectorAll<HTMLElement>("[data-scrollspy-link]"));
+      const guideWorkflow = document.querySelector<HTMLElement>("[data-guide-workflow]");
+      const scrollspyNav = document.querySelector<HTMLElement>("[data-scrollspy-nav]");
+      const scrollspyProgress = document.querySelector<HTMLElement>("[data-scrollspy-progress]");
       let scrollspyFrame = 0;
       let scrollspyClickLockUntil = 0;
-      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
-      const setGuideStatus = (activeIndex, progressPercent, isComplete = false) => {
+      const setGuideStatus = (activeIndex: number, progressPercent: number, isComplete = false) => {
         guideLinks.forEach((link, index) => {
           const status = isComplete && index <= activeIndex ? "complete" : index < activeIndex ? "complete" : index === activeIndex ? "current" : "upcoming";
           link.setAttribute("data-status", status);
@@ -578,7 +548,7 @@ const icon = {
         const sectionProgress = clamp((anchorDocumentY - sectionStart) / Math.max(sectionEnd - sectionStart, 1), 0, 1);
         const finalSection = guideSections[guideSections.length - 1];
         const finalSectionEnd = finalSection.offsetTop + finalSection.offsetHeight;
-        const isComplete = anchorDocumentY >= finalSectionEnd || (guideWorkflow && guideWorkflow.getBoundingClientRect().bottom <= window.innerHeight);
+        const isComplete = anchorDocumentY >= finalSectionEnd || (guideWorkflow ? guideWorkflow.getBoundingClientRect().bottom <= window.innerHeight : false);
         const progressPercent = isComplete ? 100 : ((activeIndex + sectionProgress) / guideSections.length) * 100;
 
         setGuideStatus(activeIndex, progressPercent, isComplete);

@@ -1,0 +1,33 @@
+---
+import type { GuideContent, Locale } from "../data/guide";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+interface Props {
+  content: Pick<GuideContent, "hero" | "languageSwitcherLabel">;
+  locale: Locale;
+  showLanguageSwitcher?: boolean;
+}
+
+const { content, locale, showLanguageSwitcher = false } = Astro.props;
+---
+
+<header class="relative grid min-h-[90vh] overflow-hidden rounded-sm border border-olive-900/50 bg-gradient-to-br from-olive-50 via-paper to-olive-200/60 p-5 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16 lg:p-8" data-reveal>
+  {showLanguageSwitcher && (
+    <LanguageSwitcher currentLocale={locale} label={content.languageSwitcherLabel} />
+  )}
+
+  <div class="flex flex-col justify-between gap-12">
+    <a class="sticky top-8 z-10 w-fit" href="https://alps.foundation" aria-label="ALPS Foundation">
+      <span class="alps-logo-mask alps-logo-mask--header" aria-hidden="true"></span>
+    </a>
+    <p class="max-w-sm border-l-2 border-olive-700 pl-5 text-base leading-relaxed text-ink-soft">
+      {content.hero.summary}
+    </p>
+  </div>
+
+  <section class="flex flex-col justify-end pt-20">
+    <h1 class="guide-hero-title max-w-6xl bg-gradient-to-br from-ink via-olive-900 to-olive-700 bg-clip-text font-black text-transparent">
+      {content.hero.title}
+    </h1>
+  </section>
+</header>

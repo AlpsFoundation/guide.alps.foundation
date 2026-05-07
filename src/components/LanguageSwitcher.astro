@@ -1,0 +1,29 @@
+---
+import { getLocalePath, localeLabels, locales, type Locale } from "../data/guide";
+
+interface Props {
+  currentLocale: Locale;
+  label: string;
+}
+
+const { currentLocale, label } = Astro.props;
+---
+
+<nav class="language-switcher" aria-label={label}>
+  <ul class="flex">
+    {locales.map((availableLocale) => (
+      <li class="border-r border-rule last:border-r-0">
+        <a
+          class:list={[
+            "block px-3 py-2 transition hover:bg-olive-100 hover:text-ink",
+            availableLocale === currentLocale ? "bg-ink text-paper hover:bg-ink hover:text-paper" : "text-ink-soft",
+          ]}
+          href={getLocalePath(availableLocale)}
+          aria-current={availableLocale === currentLocale ? "page" : undefined}
+        >
+          {localeLabels[availableLocale]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
