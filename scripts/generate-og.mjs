@@ -2,10 +2,12 @@ import { chromium } from "playwright";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getOgImagePath, guideMeta, ogImageSize } from "../src/data/guide-meta.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const publicDir = path.join(root, "public");
+const jpegQuality = 82;
 
 const fontBuffer = await fs.readFile(path.join(publicDir, "fonts/Switzer-Variable.woff2"));
 const fontUrl = `data:font/woff2;base64,${fontBuffer.toString("base64")}`;
@@ -13,12 +15,18 @@ const fontUrl = `data:font/woff2;base64,${fontBuffer.toString("base64")}`;
 const logoSvg = await fs.readFile(path.join(publicDir, "alps-logo.svg"), "utf8");
 const logoUrl = `data:image/svg+xml;utf8,${encodeURIComponent(logoSvg)}`;
 
-const title = "How to Start a Psychedelic Student Association at Your University";
-const tagline =
-  "A practical playbook for students ready to bring evidence-based psychedelic education and harm reduction to their campus, and to plug into the growing European network.";
+const escapeHtml = (value) =>
+  value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 
-const html = `<!DOCTYPE html>
-<html lang="en">
+const titleSizeFor = (title) => {
+  if (title.length >= 76) return 58;
+  if (title.length >= 68) return 61;
+  if (title.length >= 60) return 64;
+  return 68;
+};
+
+const htmlFor = ({ locale, meta }) => `<!DOCTYPE html>
+<html lang="${escapeHtml(locale)}">
 <head>
 <meta charset="utf-8" />
 <style>
@@ -46,8 +54,8 @@ const html = `<!DOCTYPE html>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
-    width: 1200px;
-    height: 630px;
+    width: ${ogImageSize.width}px;
+    height: ${ogImageSize.height}px;
   }
 
   body {
@@ -107,15 +115,17 @@ const html = `<!DOCTYPE html>
   }
 
   .title {
-    font-size: 68px;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
+    font-size: ${titleSizeFor(meta.title)}px;
+    line-height: 1.02;
     font-weight: 900;
     max-width: 1000px;
     background: linear-gradient(135deg, var(--ink) 0%, var(--olive-900) 55%, var(--olive-700) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    hyphens: auto;
+    overflow-wrap: normal;
+    text-wrap: balance;
   }
 
   .tagline {
@@ -125,6 +135,7 @@ const html = `<!DOCTYPE html>
     max-width: 980px;
     margin-top: 28px;
     font-weight: 400;
+    text-wrap: balance;
   }
 
   .bottom {
@@ -153,8 +164,8 @@ const html = `<!DOCTYPE html>
 
   <div class="middle">
     <div class="eyebrow">Awareness Lectures on Psychedelics in Switzerland</div>
-    <h1 class="title">${title}</h1>
-    <p class="tagline">${tagline}</p>
+    <h1 class="title">${escapeHtml(meta.title)}</h1>
+    <p class="tagline">${escapeHtml(meta.description)}</p>
   </div>
 
   <div class="bottom">
@@ -164,25 +175,34 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
-const outPath = path.join(publicDir, "og-image.png");
-
 const browser = await chromium.launch();
+
 try {
   const context = await browser.newContext({
-    viewport: { width: 1200, height: 630 },
+    viewport: { width: ogImageSize.width, height: ogImageSize.height },
     deviceScaleFactor: 1,
   });
   const page = await context.newPage();
-  await page.setContent(html, { waitUntil: "load" });
-  await page.evaluate(async () => {
-    await document.fonts.ready;
-  });
-  await page.screenshot({
-    path: outPath,
-    type: "png",
-    clip: { x: 0, y: 0, width: 1200, height: 630 },
-  });
-  console.log(`Wrote ${path.relative(root, outPath)}`);
+
+  for (const [locale, meta] of Object.entries(guideMeta)) {
+    const outPath = path.join(publicDir, getOgImagePath(locale).slice(1));
+
+    await page.setContent(htmlFor({ locale, meta }), { waitUntil: "load" });
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+    });
+    await page.screenshot({
+      path: outPath,
+      type: "jpeg",
+      quality: jpegQuality,
+      clip: { x: 0, y: 0, width: ogImageSize.width, height: ogImageSize.height },
+    });
+
+    const stats = await fs.stat(outPath);
+    console.log(`Wrote ${path.relative(root, outPath)} (${Math.round(stats.size / 1024)} KB)`);
+  }
+
+  await fs.rm(path.join(publicDir, "og-image.png"), { force: true });
 } finally {
   await browser.close();
 }

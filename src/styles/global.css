@@ -37,6 +37,8 @@
 }
 
 html {
+  max-width: 100%;
+  overflow-x: clip;
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -44,6 +46,8 @@ html {
 }
 
 body {
+  max-width: 100%;
+  overflow-x: clip;
   min-height: 100vh;
   background:
     radial-gradient(circle at top right, rgb(157 170 87 / 0.2), transparent 34rem),
@@ -51,6 +55,13 @@ body {
     linear-gradient(180deg, #fbfaf4 0%, var(--color-paper) 42%, #f1eedf 100%);
   color: var(--color-ink);
   text-rendering: geometricPrecision;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
 ::selection {
@@ -115,6 +126,98 @@ body {
 .list-icon {
   flex-shrink: 0;
   margin-top: 0.22em;
+}
+
+.guide-page,
+.guide-page * {
+  min-width: 0;
+}
+
+.guide-text-wrap,
+.guide-page p,
+.guide-page li,
+.guide-page h2,
+.guide-page h3,
+.guide-page th,
+.guide-page td,
+.resource-link {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.guide-hero-title {
+  max-inline-size: 100%;
+  font-size: clamp(2.55rem, min(6.4vw, 8.2dvh), 7.4rem);
+  line-height: 1.06;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  padding-bottom: 0.08em;
+  text-wrap: balance;
+}
+
+.guide-kicker-title {
+  max-inline-size: 100%;
+  font-size: clamp(1.9rem, 5.2vw, 3rem);
+  line-height: 1.14;
+  padding-bottom: 0.08em;
+  text-wrap: balance;
+}
+
+.guide-section-title {
+  max-inline-size: 100%;
+  font-size: clamp(2.25rem, 6vw, 3rem);
+  line-height: 1.16;
+  padding-bottom: 0.1em;
+  text-wrap: balance;
+}
+
+.guide-part-title {
+  max-inline-size: 100%;
+  font-size: clamp(2.4rem, 7.4vw, 3.4rem);
+  line-height: 1.14;
+  padding-bottom: 0.1em;
+  text-wrap: balance;
+}
+
+.draft-translation-banner {
+  position: fixed;
+  z-index: 80;
+  top: 1.15rem;
+  left: -10.5rem;
+  width: 32rem;
+  transform: rotate(-20deg);
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  background: var(--color-ink);
+  padding: 0.48rem 0;
+  color: var(--color-paper);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0 1px 3px rgb(20 20 15 / 0.16);
+  transform-origin: center;
+  white-space: nowrap;
+}
+
+.language-switcher {
+  position: absolute;
+  z-index: 70;
+  top: 1.25rem;
+  right: 1.25rem;
+  max-width: calc(100% - 2.5rem);
+  border: 1px solid rgb(20 20 15 / 0.2);
+  background: rgb(247 245 237 / 0.9);
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .guide-workflow {
@@ -258,8 +361,9 @@ body {
   font-size: 0.68rem;
   font-weight: 700;
   line-height: 1.05;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .scrollspy-link__icon {
@@ -400,6 +504,38 @@ body {
 }
 
 @media (max-width: 639px) {
+  .guide-hero-title {
+    font-size: clamp(2.25rem, min(10.2vw, 7.4dvh), 4rem);
+    line-height: 1.1;
+  }
+
+  .guide-kicker-title {
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    line-height: 1.16;
+  }
+
+  .guide-section-title,
+  .guide-part-title {
+    font-size: clamp(2rem, 8.2vw, 3rem);
+    line-height: 1.16;
+  }
+
+  .draft-translation-banner {
+    top: 1.05rem;
+    left: -9.65rem;
+    width: 28rem;
+    padding-block: 0.42rem;
+    font-size: 0.58rem;
+    transform: rotate(-18deg);
+  }
+
+  .language-switcher {
+    top: 0.75rem;
+    right: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+    font-size: 0.68rem;
+  }
+
   .scrollspy-nav {
     width: min(100%, 34rem);
   }

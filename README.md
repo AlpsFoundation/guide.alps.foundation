@@ -1,4 +1,4 @@
-![](public/og-image.png)
+![](public/og-image.jpg)
 
 # guide.alps.foundation
 
@@ -23,7 +23,7 @@ The whole site is one Astro page (`src/pages/index.astro`) with content authored
 | `pnpm preview`         | Preview the production build locally                      |
 | `pnpm astro check`     | Type-check `.astro` files                                 |
 | `pnpm generate-types`  | Regenerate Cloudflare Worker bindings (`wrangler types`)  |
-| `pnpm generate-og`     | Regenerate `public/og-image.png` (see below)              |
+| `pnpm generate-og`     | Regenerate localized Open Graph JPEGs (see below)         |
 
 ## Editing content
 
@@ -31,13 +31,13 @@ All copy lives in the frontmatter constants of `src/pages/index.astro` (`registr
 
 ## Open Graph image
 
-`public/og-image.png` is the social preview shown when the page is shared. It is committed to the repo and regenerated as a one-off via:
+The localized `public/og-image*.jpg` files are the social previews shown when each language page is shared. They are committed to the repo and regenerated as a one-off via:
 
 ```sh
 pnpm generate-og
 ```
 
-The script (`scripts/generate-og.mjs`) uses headless Chromium (Playwright) to render an HTML layout with the real Switzer woff2 font and the masked ALPS logo gradient, then screenshots a 1200×630 PNG. Run it again whenever the title or tagline changes — the source strings live at the top of the script.
+The script (`scripts/generate-og.mjs`) uses headless Chromium (Playwright) to render an HTML layout with the real Switzer woff2 font and the masked ALPS logo gradient, then screenshots optimized 1200×630 JPEGs. Run it again whenever a localized title or description changes — the source strings live in `src/data/guide-meta.mjs`.
 
 First-time setup on a new machine:
 

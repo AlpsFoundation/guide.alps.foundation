@@ -1,0 +1,14 @@
+---
+import GuidePage from "../../components/GuidePage.astro";
+import { translatedLocales, type TranslatedLocale } from "../../data/guide";
+
+export function getStaticPaths() {
+  return translatedLocales.map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const locale = Astro.params.locale as TranslatedLocale;
+---
+
+<GuidePage locale={locale} showDraftBanner showLanguageSwitcher />
