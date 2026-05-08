@@ -164,7 +164,9 @@ export type GuideContent = {
   footer: {
     version: string;
     builtWith: string;
+    builtWithFinalSeparator?: string;
     sourceLabel: string;
+    translationCredit?: string;
   };
 };
 
