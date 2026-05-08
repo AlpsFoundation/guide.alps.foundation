@@ -165,6 +165,7 @@ export type GuideContent = {
     version: string;
     builtWith: string;
     sourceLabel: string;
+    translationReviewer?: string;
   };
 };
 
